@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: node-counter-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            component: node-counter
+    template:
+        metadata:
+            labels:
+                component: node-counter
+        spec:
+            containers:
+                - name: node-counter
+                  image: fedehermida/servercounter
+                  ports:
+                      - containerPort: 5000
+                  env:
+                      - name: REDIS_HOST
+                        value: redis-cluster-ip-service
+                      - name: REDIS_PORT
+                        value: '6379'
